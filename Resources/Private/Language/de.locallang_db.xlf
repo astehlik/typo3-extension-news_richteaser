@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2011-10-17T20:22:32Z" product-name="news_richteaser" target-language="de">
+		<header/>
+		<body>
+			<trans-unit id="content_elements_tab_heading" xml:space="preserve">
+				<target>Inhalte</target>
+			</trans-unit>
+			<trans-unit id="tx_news_domain_model_news.teaser_content_elements" xml:space="preserve">
+				<target>Teaser Inhaltselemente</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

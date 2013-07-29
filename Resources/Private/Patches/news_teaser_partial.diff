@@ -1,0 +1,89 @@
+diff --git Resources/Private/Partials/Detail/Teaser.html Resources/Private/Partials/Detail/Teaser.html
+new file mode 100644
+index 0000000..019e84a
+--- /dev/null
++++ Resources/Private/Partials/Detail/Teaser.html
+@@ -0,0 +1,7 @@
++
++<f:if condition="{newsItem.teaser}">
++	<!-- teaser -->
++	<div class="teaser-text">
++		<f:format.html>{newsItem.teaser}</f:format.html>
++	</div>
++</f:if>
+\ No newline at end of file
+diff --git Resources/Private/Partials/List/Item.html Resources/Private/Partials/List/Item.html
+index bdba593..9f96f1c 100644
+--- Resources/Private/Partials/List/Item.html
++++ Resources/Private/Partials/List/Item.html
+@@ -67,24 +67,7 @@
+ 	</f:if>
+ 
+ 	<!-- teas=ser text -->
+-	<div class="teaser-text">
+-		<f:if condition="{newsItem.teaser}">
+-			<f:then>
+-				<f:format.html>
+-					<f:format.crop maxCharacters="{settings.cropMaxCharacters}" respectWordBoundaries="1">{newsItem.teaser}</f:format.crop>
+-				</f:format.html>
+-			</f:then>
+-			<f:else>
+-				<f:format.html>
+-					<f:format.crop maxCharacters="{settings.cropMaxCharacters}" respectWordBoundaries="1">{newsItem.bodytext}</f:format.crop>
+-				</f:format.html>
+-			</f:else>
+-		</f:if>
+-
+-		<n:link newsItem="{newsItem}" settings="{settings}" class="more">
+-			<f:translate key="more-link" />
+-		</n:link>
+-	</div>
++	<f:render partial="List/Teaser" arguments="{newsItem: newsItem, settings: settings}"/>
+ 
+ 	<!-- footer information -->
+ 	<div class="footer">
+diff --git Resources/Private/Partials/List/Teaser.html Resources/Private/Partials/List/Teaser.html
+new file mode 100644
+index 0000000..fc227a4
+--- /dev/null
++++ Resources/Private/Partials/List/Teaser.html
+@@ -0,0 +1,20 @@
++{namespace n=Tx_News_ViewHelpers}
++
++<div class="teaser-text">
++	<f:if condition="{newsItem.teaser}">
++		<f:then>
++			<f:format.html>
++				<f:format.crop maxCharacters="{settings.cropMaxCharacters}" respectWordBoundaries="1">{newsItem.teaser}</f:format.crop>
++			</f:format.html>
++		</f:then>
++		<f:else>
++			<f:format.html>
++				<f:format.crop maxCharacters="{settings.cropMaxCharacters}" respectWordBoundaries="1">{newsItem.bodytext}</f:format.crop>
++			</f:format.html>
++		</f:else>
++	</f:if>
++
++	<n:link newsItem="{newsItem}" settings="{settings}" class="more">
++		<f:translate key="more-link" />
++	</n:link>
++</div>
+\ No newline at end of file
+diff --git Resources/Private/Templates/News/Detail.html Resources/Private/Templates/News/Detail.html
+index 413121e..e69651b 100644
+--- Resources/Private/Templates/News/Detail.html
++++ Resources/Private/Templates/News/Detail.html
+@@ -57,12 +57,7 @@
+ 				</p>
+ 			</div>
+ 
+-			<f:if condition="{newsItem.teaser}">
+-				<!-- teaser -->
+-				<div class="teaser-text">
+-					<f:format.html>{newsItem.teaser}</f:format.html>
+-				</div>
+-			</f:if>
++			<f:render partial="Detail/Teaser" arguments="{newsItem: newsItem, settings: settings}"/>
+ 
+ 			<f:if condition="{newsItem.contentElements}">
+ 				<!-- content elements -->
