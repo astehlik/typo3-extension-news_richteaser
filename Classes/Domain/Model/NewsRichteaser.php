@@ -33,6 +33,19 @@ class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 	protected $teaserContentElements;
 
 	/**
+	 * Adds a content element to the record
+	 *
+	 * @param \Tx_News_Domain_Model_TtContent $contentElement
+	 * @return void
+	 */
+	public function addTeaserContentElement(\Tx_News_Domain_Model_TtContent $contentElement) {
+		if ($this->getTeaserContentElements() === NULL) {
+			$this->teaserContentElements = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		}
+		$this->teaserContentElements->attach($contentElement);
+	}
+
+	/**
 	 * A news item has a teaser if either the teaser field is not empty
 	 * of if it has any content elements.
 	 *
