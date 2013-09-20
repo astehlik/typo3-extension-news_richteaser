@@ -44,8 +44,8 @@ class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 			return TRUE;
 		}
 
-		$contentElements = $this->getContentElements();
-		if (isset($contentElements) && $contentElements->count()) {
+		$teaserContentElements = $this->getTeaserContentElements();
+		if (isset($teaserContentElements) && $teaserContentElements->count()) {
 			return TRUE;
 		} else {
 			return FALSE;
