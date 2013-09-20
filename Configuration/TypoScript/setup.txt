@@ -1,25 +1,25 @@
 
-
 plugin.tx_news {
 
-		view.partialRootPath = EXT:news_richteaser/Resources/Private/Partials/
+	view.partialRootPath = EXT:news_richteaser/Resources/Private/Partials/
 
-		persistence {
-    		classes {
-    			Tx_News_Domain_Model_News {
-    				subclasses {
-    					0 = Int\NewsRichteaser\Domain\Model\NewsRichteaser
-    				}
-    			}
+	persistence {
 
-    			Int\NewsRichteaser\Domain\Model\NewsRichteaser {
-    				mapping {
-    					recordType = 0
-    					tableName = tx_news_domain_model_news
-    				}
-    			}
-    		}
-    	}
+		classes {
+			Tx_News_Domain_Model_News {
+				subclasses {
+					0 = Int\NewsRichteaser\Domain\Model\NewsRichteaser
+				}
+			}
+
+			Int\NewsRichteaser\Domain\Model\NewsRichteaser {
+				mapping {
+					recordType = 0
+					tableName = tx_news_domain_model_news
+				}
+			}
+		}
+	}
 }
 
 lib.tx_news.contentElementRenderingTeaser < lib.tx_news.contentElementRendering
