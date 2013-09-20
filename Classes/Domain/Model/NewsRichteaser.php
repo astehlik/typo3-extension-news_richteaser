@@ -27,7 +27,7 @@ namespace Int\NewsRichteaser\Domain\Model;
 class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 
 	/**
-	 * @var \Tx_Extbase_Persistence_ObjectStorage<Tx_News_Domain_Model_TtContent>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Tx_News_Domain_Model_TtContent>
 	 * @lazy
 	 */
 	protected $teaserContentElements;
@@ -67,7 +67,7 @@ class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 	}
 
 	/**
-	 * @return \Tx_Extbase_Persistence_ObjectStorage
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getTeaserContentElements() {
 		return $this->teaserContentElements;
@@ -80,6 +80,7 @@ class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 	 */
 	public function getTeaserContentElementIdList() {
 		$idList = array();
+		/** @var \Tx_News_Domain_Model_TtContent $contentElement */
 		foreach ($this->getTeaserContentElements() as $contentElement) {
 			$idList[] = $contentElement->getUid();
 		}
@@ -87,4 +88,5 @@ class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 	}
 
 }
+
 ?>
