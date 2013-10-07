@@ -59,11 +59,11 @@ class DataPreprocessor extends \TYPO3\CMS\Backend\Form\DataPreprocessor {
 			return;
 		}
 
-		if (!(isset($ajaxArguments[2]) &&  $ajaxArguments[2] === 'tx-news_autocontent-record')) {
+		if (!(isset($ajaxArguments[2]) && $ajaxArguments[2] === 'tx-news_autocontent-record')) {
 			return;
 		}
 
-		if (!(isset($ajaxArguments[3]) &&  intval($ajaxArguments[3]))) {
+		if (!(isset($ajaxArguments[3]) && intval($ajaxArguments[3]))) {
 			return;
 		}
 
@@ -75,6 +75,4 @@ class DataPreprocessor extends \TYPO3\CMS\Backend\Form\DataPreprocessor {
 			$this->defVals['tt_content']['bodytext'] = '<p>Hauptinhalt der News mit ausführlichen Informationen.</p>';
 		}
 	}
-
 }
-?>

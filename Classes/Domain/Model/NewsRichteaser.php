@@ -99,7 +99,4 @@ class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 		}
 		return implode(',', $idList);
 	}
-
 }
-
-?>

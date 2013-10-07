@@ -103,5 +103,3 @@ class FormEngine {
 		return $script;
 	}
 }
-
-?>
