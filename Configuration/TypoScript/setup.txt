@@ -1,7 +1,7 @@
 
 plugin.tx_news {
 
-	view.partialRootPath = EXT:news_richteaser/Resources/Private/Partials/
+	view.overlays.news_richteaser.partialRootPath = EXT:news_richteaser/Resources/Private/Partials/
 
 	persistence {
 
