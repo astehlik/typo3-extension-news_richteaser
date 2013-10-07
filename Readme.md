@@ -10,9 +10,6 @@ This extension is currently work in progress.
 
 To work correctly a patch to the news extension is currently required (Resources/Private/Patches/news_teaser_partial.diff).
 
-Additinally it is required that both Extensions (news and news_richteaser) are installed as local Extensions in typoconf/ext
-because to prevent duplicate partials symlinks to the original news partials are used.
-
 ## Install
 
 Simply install the extension and include the "News rich teaser" in your TypoScript template.
