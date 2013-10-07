@@ -10,6 +10,8 @@ This extension is currently work in progress.
 
 To work correctly a patch to the news extension is currently required (Resources/Private/Patches/news_teaser_partial.diff).
 
+Alternatively you can clone the news extension from the Github repository (https://github.com/astehlik/typo3-extension-news) and checkout the teaserpatch branch which is based on the current master of the news extension and has the patch applied already. It will be updated from time to time.
+
 ## Install
 
 Simply install the extension and include the "News rich teaser" in your TypoScript template.
