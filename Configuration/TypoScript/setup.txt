@@ -1,7 +1,17 @@
 
 plugin.tx_news {
 
-	view.overlays.news_richteaser.partialRootPath = EXT:news_richteaser/Resources/Private/Partials/
+	view {
+		// Clear the old settings because otherwise the overlay mechanism
+		// will not work
+		templateRootPath >
+
+		// Re-initialize the news paths for the overlay mechanism
+		partialRootPaths.news = {$plugin.tx_news.view.partialRootPath}
+
+		// add our own directory to the overlay configuration
+		partialRootPaths.news_richteaser = EXT:news_richteaser/Resources/Private/Partials/
+	}
 
 	persistence {
 
