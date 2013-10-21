@@ -9,6 +9,20 @@
 			<trans-unit id="tx_news_domain_model_news.teaser_content_elements" xml:space="preserve">
 				<target>Teaser Inhaltselemente</target>
 			</trans-unit>
+			<trans-unit id="teaser_default_header" xml:space="preserve">
+				<target>Schritt 1: Teasertext eingeben (Kurzer Anmoderations-Text)</target>
+			</trans-unit>
+			<trans-unit id="teaser_default_bodytext" xml:space="preserve">
+				<target>Hier können Sie einen kurzen Anreißertext für die News eingeben.
+Dieser erscheint auf der Website in der Listen- und der Slider-Ansicht der News. Zudem bildet er den ersten Abschnitt der Details-Ansicht einer News.</target>
+			</trans-unit>
+			<trans-unit id="content_default_header" xml:space="preserve">
+				<target>Schritt 2: Haupttext eingeben</target>
+			</trans-unit>
+			<trans-unit id="content_default_bodytext" xml:space="preserve">
+				<target>Geben Sie hier den ausführlichen Hauptinhalt der News ein.
+Dieser ist auf der Website in der Details-Ansicht einer News sichtbar.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

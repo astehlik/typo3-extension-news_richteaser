@@ -9,6 +9,20 @@
 			<trans-unit id="tx_news_domain_model_news.teaser_content_elements" xml:space="preserve">
 				<source>Teaser content elements</source>
 			</trans-unit>
+			<trans-unit id="teaser_default_header" xml:space="preserve">
+				<source>Step 1: Enter teaser text</source>
+			</trans-unit>
+			<trans-unit id="teaser_default_bodytext" xml:space="preserve">
+				<source>Please enter a short teaser text for the news.
+This text will appear in the list view of the news. Additionally it will be displayed in the detail view before the main content.</source>
+			</trans-unit>
+			<trans-unit id="content_default_header" xml:space="preserve">
+				<source>Step 2: Enter main text</source>
+			</trans-unit>
+			<trans-unit id="content_default_bodytext" xml:space="preserve">
+				<source>Please enter the main content of the news.
+This content will only be displayed in the detail view of a news.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -26,11 +26,11 @@ namespace Int\NewsRichteaser\Hooks;
  */
 class DataPreprocessor extends \TYPO3\CMS\Backend\Form\DataPreprocessor {
 
-	/***********************************************
-	 *
-	 * Getting record content, ready for display in TCEforms
-	 *
-	 ***********************************************/
+	/**
+	 * @var \TYPO3\CMS\Lang\LanguageService
+	 */
+	protected $languageService;
+
 	/**
 	 * A function which can be used for load a batch of records from $table into internal memory of this object.
 	 * The function is also used to produce proper default data for new records
@@ -40,8 +40,6 @@ class DataPreprocessor extends \TYPO3\CMS\Backend\Form\DataPreprocessor {
 	 * @param string $idList Comma list of id values. If $idList is "prev" then the value from $this->prevPageID is used. NOTICE: If $operation is "new", then negative ids are meant to point to a "previous" record and positive ids are PID values for new records. Otherwise (for existing records that is) it is straight forward table/id pairs.
 	 * @param string $operation If "new", then a record with default data is returned. Further, the $id values are meant to be PID values (or if negative, pointing to a previous record). If NOT new, then the table/ids are just pointing to an existing record!
 	 * @return void
-	 * @see renderRecord()
-	 * @todo Define visibility
 	 */
 	public function fetchRecord($table, $idList, $operation) {
 		$this->modifyDefValuesIfNewsAutcontentRecord();
@@ -68,11 +66,28 @@ class DataPreprocessor extends \TYPO3\CMS\Backend\Form\DataPreprocessor {
 		}
 
 		if (strpos($ajaxArguments[1], 'teaser_content_elements') !== FALSE) {
-			$this->defVals['tt_content']['header'] = 'Teasertext';
-			$this->defVals['tt_content']['bodytext'] = '<p>Kurzer Anreißertext für die News.</p>';
+			$this->defVals['tt_content']['header'] = $this->translate('teaser_default_header');
+			$this->defVals['tt_content']['bodytext'] = $this->translate('teaser_default_bodytext');
 		} else if (strpos($ajaxArguments[1], 'content_elements') !== FALSE) {
-			$this->defVals['tt_content']['header'] = 'Haupttext';
-			$this->defVals['tt_content']['bodytext'] = '<p>Hauptinhalt der News mit ausführlichen Informationen.</p>';
+			$this->defVals['tt_content']['header'] = $this->translate('content_default_header');
+			$this->defVals['tt_content']['bodytext'] = $this->translate('content_default_bodytext');
 		}
+	}
+
+	/**
+	 * Reads the translation with the given key from the Backend
+	 * label language file.
+	 *
+	 * @param string $key
+	 * @return string string
+	 */
+	protected function translate($key) {
+
+		if (!isset($this->languageService)) {
+			/** @var \TYPO3\CMS\Lang\LanguageService $GLOBALS['LANG'] */
+			$this->languageService = $GLOBALS['LANG'];
+		}
+
+		return $this->languageService->sL('LLL:EXT:news_richteaser/Resources/Private/Language/locallang_db.xlf:' . $key);
 	}
 }
