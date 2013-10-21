@@ -23,6 +23,12 @@ This text will appear in the list view of the news. Additionally it will be disp
 				<source>Please enter the main content of the news.
 This content will only be displayed in the detail view of a news.</source>
 			</trans-unit>
+			<trans-unit id="add_additional_content_element_teaser" xml:space="preserve">
+				<source>Add additional teaser content element</source>
+			</trans-unit>
+			<trans-unit id="add_additional_content_element_main" xml:space="preserve">
+				<source>Add additional main content element</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

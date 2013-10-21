@@ -23,6 +23,12 @@ Dieser erscheint auf der Website in der Listen- und der Slider-Ansicht der News.
 				<target>Geben Sie hier den ausführlichen Hauptinhalt der News ein.
 Dieser ist auf der Website in der Details-Ansicht einer News sichtbar.</target>
 			</trans-unit>
+			<trans-unit id="add_additional_content_element_teaser" xml:space="preserve">
+				<target>Weiteres Teaser-Inhaltselement hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="add_additional_content_element_main" xml:space="preserve">
+				<target>Weiteres Hauptinhaltselement hinzufügen</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
