@@ -2,14 +2,8 @@
 plugin.tx_news {
 
 	view {
-		// Clear the old settings because otherwise the overlay mechanism
-		// will not work
-		partialRootPath >
-
-		// Re-initialize the news paths for the overlay mechanism
-		partialRootPaths.news = {$plugin.tx_news.view.partialRootPath}
-
-		// add our own directory to the overlay configuration
+		// Just add our own partial path to the list, integrator needs
+		// to take care of correct loading order!
 		partialRootPaths.news_richteaser = EXT:news_richteaser/Resources/Private/Partials/
 	}
 
