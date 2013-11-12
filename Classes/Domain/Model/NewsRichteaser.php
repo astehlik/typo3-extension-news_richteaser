@@ -93,10 +93,15 @@ class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 	 */
 	public function getTeaserContentElementIdList() {
 		$idList = array();
-		/** @var \Tx_News_Domain_Model_TtContent $contentElement */
-		foreach ($this->getTeaserContentElements() as $contentElement) {
-			$idList[] = $contentElement->getUid();
+		$teaserContentElements = $this->getTeaserContentElements();
+
+		if (isset($teaserContentElements)) {
+			/** @var \Tx_News_Domain_Model_TtContent $contentElement */
+			foreach ($teaserContentElements as $contentElement) {
+				$idList[] = $contentElement->getUid();
+			}
 		}
+
 		return implode(',', $idList);
 	}
 }
