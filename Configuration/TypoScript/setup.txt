@@ -2,9 +2,10 @@
 plugin.tx_news {
 
 	view {
-		// Just add our own partial path to the list, integrator needs
-		// to take care of correct loading order!
+		// Just add our own partial / template path to the list,
+		// integrator needs to take care of correct loading order!
 		partialRootPaths.news_richteaser = EXT:news_richteaser/Resources/Private/Partials/
+		templateRootPaths.news_richteaser = EXT:news_richteaser/Resources/Private/Templates/
 	}
 
 	persistence {

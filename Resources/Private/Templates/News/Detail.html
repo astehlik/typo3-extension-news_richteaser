@@ -57,12 +57,7 @@
 				</p>
 			</div>
 
-			<f:if condition="{newsItem.teaser}">
-				<!-- teaser -->
-				<div class="teaser-text">
-					<f:format.html>{newsItem.teaser}</f:format.html>
-				</div>
-			</f:if>
+			<f:render partial="Detail/Teaser" arguments="{_all}"/>
 
 			<f:if condition="{newsItem.contentElements}">
 				<!-- content elements -->
