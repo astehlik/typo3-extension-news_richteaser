@@ -87,21 +87,16 @@ class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 	}
 
 	/**
-	 * Get id list of content elements
+	 * Returns the UID of the news item or the localized UID if it is set.
 	 *
-	 * @return string
+	 * @return int
 	 */
-	public function getTeaserContentElementIdList() {
-		$idList = array();
-		$teaserContentElements = $this->getTeaserContentElements();
-
-		if (isset($teaserContentElements)) {
-			/** @var \Tx_News_Domain_Model_TtContent $contentElement */
-			foreach ($teaserContentElements as $contentElement) {
-				$idList[] = $contentElement->getUid();
-			}
+	public function getUidLocalized() {
+		$localizedUid = $this->_getProperty('_localizedUid');
+		if ($localizedUid !== NULL) {
+			return $localizedUid;
+		} else {
+			return $this->getUid();
 		}
-
-		return implode(',', $idList);
 	}
 }

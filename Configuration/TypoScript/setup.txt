@@ -27,4 +27,23 @@ plugin.tx_news {
 	}
 }
 
+lib.tx_news.contentElementRendering >
+lib.tx_news.contentElementRendering = CONTENT
+lib.tx_news.contentElementRendering {
+
+	table = tt_content
+	select {
+
+		where = tt_content.tx_news_related_field='content_elements' AND tt_content.tx_news_related_news=###news_uid###
+		markers.news_uid.field = newsUid
+		markers.news_uid.intval = 1
+		orderBy = sorting
+		languageField = sys_language_uid
+
+		// Either pidInList or uidInList is required, otherwise nothing will be rendered.
+		pidInList.field = newsPid
+	}
+}
+
 lib.tx_news.contentElementRenderingTeaser < lib.tx_news.contentElementRendering
+lib.tx_news.contentElementRenderingTeaser.select.where = tt_content.tx_news_related_field='teaser_content_elements' AND tt_content.tx_news_related_news=###news_uid###
