@@ -7,24 +7,6 @@ plugin.tx_news {
 		partialRootPaths.news_richteaser = EXT:news_richteaser/Resources/Private/Partials/
 		templateRootPaths.news_richteaser = EXT:news_richteaser/Resources/Private/Templates/
 	}
-
-	persistence {
-
-		classes {
-			Tx_News_Domain_Model_News {
-				subclasses {
-					0 = Int\NewsRichteaser\Domain\Model\NewsRichteaser
-				}
-			}
-
-			Int\NewsRichteaser\Domain\Model\NewsRichteaser {
-				mapping {
-					recordType = 0
-					tableName = tx_news_domain_model_news
-				}
-			}
-		}
-	}
 }
 
 lib.tx_news.contentElementRendering >
@@ -47,3 +29,21 @@ lib.tx_news.contentElementRendering {
 
 lib.tx_news.contentElementRenderingTeaser < lib.tx_news.contentElementRendering
 lib.tx_news.contentElementRenderingTeaser.select.where = tt_content.tx_news_related_field='teaser_content_elements' AND tt_content.tx_news_related_news=###news_uid###
+
+config.tx_extbase.persistence {
+
+	classes {
+		Tx_News_Domain_Model_News {
+			subclasses {
+				0 = Int\NewsRichteaser\Domain\Model\NewsRichteaser
+			}
+		}
+
+		Int\NewsRichteaser\Domain\Model\NewsRichteaser {
+			mapping {
+				recordType = 0
+				tableName = tx_news_domain_model_news
+			}
+		}
+	}
+}

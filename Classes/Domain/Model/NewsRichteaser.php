@@ -11,10 +11,12 @@ namespace Int\NewsRichteaser\Domain\Model;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use Tx_News_Domain_Model_NewsDefault as NewsDefault;
+
 /**
  * News model for a news with teaser content elements
  */
-class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
+class NewsRichteaser extends NewsDefault {
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Tx_News_Domain_Model_TtContent>
@@ -29,10 +31,7 @@ class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 	 * @return void
 	 */
 	public function addTeaserContentElement(\Tx_News_Domain_Model_TtContent $contentElement) {
-		if ($this->getTeaserContentElements() === NULL) {
-			$this->teaserContentElements = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-		}
-		$this->teaserContentElements->attach($contentElement);
+		$this->getTeaserContentElements()->attach($contentElement);
 	}
 
 	/**
@@ -73,6 +72,9 @@ class NewsRichteaser extends \Tx_News_Domain_Model_NewsDefault {
 	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getTeaserContentElements() {
+		if (!isset($this->teaserContentElements)) {
+			$this->teaserContentElements = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		}
 		return $this->teaserContentElements;
 	}
 

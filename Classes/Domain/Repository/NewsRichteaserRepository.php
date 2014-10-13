@@ -11,10 +11,14 @@ namespace Int\NewsRichteaser\Domain\Repository;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /**
  * Repository for richteaser news
  */
-class NewsRichteaserRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class NewsRichteaserRepository extends Repository {
+
+	const CTYPE_NEWS_TEASER = 'tx_news_teaser';
 
 	/**
 	 * @var \TYPO3\CMS\Core\Database\DatabaseConnection
@@ -29,6 +33,18 @@ class NewsRichteaserRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	function __construct(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		parent::__construct($objectManager);
 		$this->db = $GLOBALS['TYPO3_DB'];
+	}
+
+	/**
+	 * Finds all news that have a content element with type tx_news_teaser.
+	 *
+	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findByTeaserContentElement() {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->setRespectStoragePage(FALSE);
+		$query->matching($query->equals('contentElements.CType', static::CTYPE_NEWS_TEASER));
+		return $query->execute();
 	}
 
 	/**

@@ -11,16 +11,52 @@ namespace Int\NewsRichteaser\Command;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use Int\NewsRichteaser\Domain\Repository\NewsRichteaserRepository;
+use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
+
 /**
  * Controller for richteaser news related commands.
  */
-class NewsrtCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandController {
+class NewsrtCommandController extends CommandController {
 
 	/**
 	 * @var \Int\NewsRichteaser\Domain\Repository\NewsRichteaserRepository
 	 * @inject
 	 */
 	protected $newsRepository;
+
+	/**
+	 * @var \Tx_News_Domain_Repository_TtContentRepository
+	 * @inject
+	 */
+	protected $contentRepository;
+
+
+	/**
+	 * Migrates all news that use the old tx_news_teaser content element.
+	 */
+	public function migrateTeaserContentElementsCommand() {
+
+		/** @var \Int\NewsRichteaser\Domain\Model\NewsRichteaser $news */
+		$newsWithTeaserContent = $this->newsRepository->findByTeaserContentElement();
+		foreach ($newsWithTeaserContent as $news) {
+
+			/** @var \Tx_News_Domain_Model_TtContent $content */
+			$contentUpdateCount = 0;
+			$allContent = $news->getContentElements()->toArray();
+			foreach ($allContent as $content) {
+				if ($content->getCType() === NewsRichteaserRepository::CTYPE_NEWS_TEASER) {
+					$this->contentRepository->remove($content);
+					break;
+				}
+				$news->getTeaserContentElements()->attach($content);
+				$contentUpdateCount++;
+			}
+
+			$this->newsRepository->update($news);
+			$this->outputLine('Migrated %d content elements in news %s', array($contentUpdateCount, $news->getTitle()));
+		}
+	}
 
 	/**
 	 * Update inline content elemens
