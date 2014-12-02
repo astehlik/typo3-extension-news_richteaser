@@ -1,0 +1,14 @@
+{
+	"name": "astehlik-typo3-extension/news-richteaser",
+	"description": "Allows TYPO3 content elments in news teasers.",
+	"type": "typo3-cms-extension",
+	"version": "2.1.0",
+	"require": {
+		"news": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Int\\NewsRichteaser\\": "Classes/"
+		}
+	}
+}
