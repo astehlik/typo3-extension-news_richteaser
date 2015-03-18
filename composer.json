@@ -7,7 +7,7 @@
 	"replace": {
 		"news_richteaser": "self.version"
 	},
-	"require": {
+	"suggest": {
 		"news": "*"
 	},
 	"autoload": {
