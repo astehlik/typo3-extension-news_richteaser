@@ -26,7 +26,7 @@ class NewsrtCommandController extends CommandController {
 	protected $newsRepository;
 
 	/**
-	 * @var \Tx_News_Domain_Repository_TtContentRepository
+	 * @var \GeorgRinger\News\Domain\Repository\TtContentRepository
 	 * @inject
 	 */
 	protected $contentRepository;
@@ -41,7 +41,7 @@ class NewsrtCommandController extends CommandController {
 		$newsWithTeaserContent = $this->newsRepository->findByTeaserContentElement();
 		foreach ($newsWithTeaserContent as $news) {
 
-			/** @var \Tx_News_Domain_Model_TtContent $content */
+			/** @var \GeorgRinger\News\Domain\Model\TtContent $content */
 			$contentUpdateCount = 0;
 			$allContent = $news->getContentElements()->toArray();
 			foreach ($allContent as $content) {

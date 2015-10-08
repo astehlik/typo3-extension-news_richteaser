@@ -11,7 +11,7 @@ namespace Int\NewsRichteaser\Domain\Model;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use Tx_News_Domain_Model_NewsDefault as NewsDefault;
+use GeorgRinger\News\Domain\Model\NewsDefault;
 
 /**
  * News model for a news with teaser content elements
@@ -19,7 +19,7 @@ use Tx_News_Domain_Model_NewsDefault as NewsDefault;
 class NewsRichteaser extends NewsDefault {
 
 	/**
-	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Tx_News_Domain_Model_TtContent>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\GeorgRinger\News\Domain\Model\TtContent>
 	 * @lazy
 	 */
 	protected $teaserContentElements;
@@ -27,10 +27,10 @@ class NewsRichteaser extends NewsDefault {
 	/**
 	 * Adds a content element to the record
 	 *
-	 * @param \Tx_News_Domain_Model_TtContent $contentElement
+	 * @param \GeorgRinger\News\Domain\Model\TtContent $contentElement
 	 * @return void
 	 */
-	public function addTeaserContentElement(\Tx_News_Domain_Model_TtContent $contentElement) {
+	public function addTeaserContentElement(\GeorgRinger\News\Domain\Model\TtContent $contentElement) {
 		$this->getTeaserContentElements()->attach($contentElement);
 	}
 

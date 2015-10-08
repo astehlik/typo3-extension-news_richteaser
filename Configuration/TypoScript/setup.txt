@@ -33,7 +33,7 @@ lib.tx_news.contentElementRenderingTeaser.select.where = tt_content.tx_news_rela
 config.tx_extbase.persistence {
 
 	classes {
-		Tx_News_Domain_Model_News {
+		GeorgRinger\News\Domain\Model\News {
 			subclasses {
 				0 = Int\NewsRichteaser\Domain\Model\NewsRichteaser
 			}
