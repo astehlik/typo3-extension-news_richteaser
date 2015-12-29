@@ -23,6 +23,11 @@ env:
 
 sudo: false
 
+addons:
+  apt:
+    packages:
+      - parallel
+
 cache:
   directories:
     - $HOME/.composer/cache
