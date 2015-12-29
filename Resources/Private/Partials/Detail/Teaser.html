@@ -2,7 +2,7 @@
 
 <f:if condition="{newsItem.hasTeaser}">
 	<!-- teaser -->
-	<div class="teaser-text">
+	<div class="teaser-text" itemprop="description">
 		<f:if condition="{newsItem.teaser}">
 			<f:then>
 				<f:format.html>{newsItem.teaser}</f:format.html>

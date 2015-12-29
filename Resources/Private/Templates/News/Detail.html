@@ -26,13 +26,16 @@
 				<f:render partial="Detail/Opengraph" arguments="{newsItem: newsItem, settings:settings}" />
 			</n:format.nothing>
 			<div class="header">
-				<h3>{newsItem.title}</h3>
+				<h3 itemprop="headline">{newsItem.title}</h3>
 			</div>
 			<div class="footer">
 				<p>
 					<!-- date -->
 					<span class="news-list-date">
-						<n:format.date format="{f:translate(key:'dateFormat')}">{newsItem.datetime}</n:format.date>
+						<time datetime="{f:format.date(date:newsItem.datetime, format:'Y-m-d')}">
+							<f:format.date format="{f:translate(key:'dateFormat')}">{newsItem.datetime}</f:format.date>
+							<meta itemprop="datePublished" content="{f:format.date(date:newsItem.datetime, format:'Y-m-d')}" />
+						</time>
 					</span>
 
 					<f:if condition="{newsItem.categories}">
@@ -41,7 +44,7 @@
 
 					<f:if condition="{newsItem.tags}">
 						<!-- Tags -->
-						<span class="news-list-tags">
+						<span class="news-list-tags" itemprop="keywords">
 						<f:for each="{newsItem.tags}" as="tag">
 							{tag.title}
 						</f:for>
@@ -50,25 +53,25 @@
 
 					<f:if condition="{newsItem.author}">
 						<!-- author -->
-						<span class="news-list-author">
-							<f:translate key="author" arguments="{0:newsItem.author}"></f:translate>
+						<span class="news-list-author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+							<f:translate key="author_simple" /> <span itemprop="name">{newsItem.author}</span>
 						</span>
 					</f:if>
 				</p>
 			</div>
 
-			<f:render partial="Detail/Teaser" arguments="{_all}"/>
+			<f:render partial="Detail/Teaser" arguments="{_all}" />
 
 			<f:if condition="{newsItem.contentElements}">
 				<!-- content elements -->
-				<f:cObject typoscriptObjectPath="lib.tx_news.contentElementRendering" data="{newsUid: newsItem.uidLocalized, newsPid: newsItem.pid}" />
+				<f:cObject typoscriptObjectPath="lib.tx_news.contentElementRendering">{newsItem.contentElementIdList}</f:cObject>
 			</f:if>
 
 			<f:render partial="Detail/FalMediaContainer" arguments="{media: newsItem.falMedia, settings:settings}" />
 			<f:render partial="Detail/MediaContainer" arguments="{media: newsItem.media, settings:settings}" />
 
 			<!-- main text -->
-			<div class="news-text-wrap">
+			<div class="news-text-wrap" itemprop="articleBody">
 				<f:format.html>{newsItem.bodytext}</f:format.html>
 			</div>
 
@@ -84,15 +87,21 @@
 			<f:if condition="{settings.detail.showSocialShareButtons}">
 				<div class="facebook">
 					<div class="like">
-						<n:social.facebook.like></n:social.facebook.like>
+						<n:social.facebook.like />
 					</div>
 					<div class="share">
-						<n:social.facebook.share>Share</n:social.facebook.share>
+						<n:social.facebook.share />
 					</div>
 					<div class="twitter">
 						<n:social.twitter>Twitter</n:social.twitter>
 					</div>
 				</div>
+			</f:if>
+
+			<f:if condition="{settings.detail.disqusShortname}">
+				<n:social.disqus newsItem="{newsItem}"
+								 shortName="{settings.detail.disqusShortname}"
+								 link="{n:link(newsItem:newsItem, settings:settings, uriOnly:1, configuration:'{forceAbsoluteUrl:1}')}" />
 			</f:if>
 
 			<!-- related things -->
@@ -107,8 +116,8 @@
 						<ul>
 							<f:for each="{newsItem.allRelatedSorted}" as="related">
 								<li>
-									<span class="news-related-news-date"><n:format.date format="{f:translate(key:'dateFormat')}">{related.datetime}</n:format.date></span>
-									<n:link newsItem="{related}" settings="{settings}">
+									<span class="news-related-news-date"><f:format.date format="{f:translate(key:'dateFormat')}">{related.datetime}</f:format.date></span>
+									<n:link newsItem="{related}" settings="{settings}" title="{related.title}">
 										{related.title}
 									</n:link>
 								</li>
@@ -160,17 +169,18 @@
 									<span class="news-related-files-link">
 										<n:format.fileDownload file="{relatedFile.originalResource.publicUrl}" configuration="{settings.relatedFiles.download}">
 											<f:if condition="{relatedFile.originalResource.title}">
+												<f:comment><!-- Todo: Remove format.raw() if using title/name outside cObject context--></f:comment>
 												<f:then>
-													{relatedFile.originalResource.title}
+													{relatedFile.originalResource.title -> f:format.raw()}
 												</f:then>
 												<f:else>
-													{relatedFile.originalResource.name}
+													{relatedFile.originalResource.name -> f:format.raw()}
 												</f:else>
 											</f:if>
 										</n:format.fileDownload>
 									</span>
 									<span class="news-related-files-size">
-										<n:format.fileSize fileSize="{relatedFile.originalResource.size}" format="{settings.relatedFiles.fileSizeLabels}" />
+										{relatedFile.originalResource.size -> f:format.bytes()}
 									</span>
 								</li>
 							</f:for>
