@@ -3,10 +3,18 @@ if (!defined('TYPO3_MODE')) {
     die ('Access denied.');
 }
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'Int\\NewsRichteaser\\Hooks\\FormEngine';
-
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Backend\\Form\\DataPreprocessor']['className'] = 'Int\\NewsRichteaser\\Hooks\\DataPreprocessor';
-
 if (TYPO3_MODE === 'BE') {
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = 'Int\\NewsRichteaser\\Command\\NewsrtCommandController';
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = \Int\NewsRichteaser\Command\NewsrtCommandController::class;
 }
+
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']['tx_newsrichteaser_inlinecontentautocreate'] = [
+    'nodeName' => 'tx_newsrichteaser_inlinecontentautocreate',
+    'class' => \Int\NewsRichteaser\InlineContentAutocreate\InlineControlContainer::class,
+    'priority' => 50,
+];
+
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\Int\NewsRichteaser\InlineContentAutocreate\FormDataProvider::class] = [
+    'depends' => [
+        \TYPO3\CMS\Backend\Form\FormDataProvider\TcaInline::class
+    ],
+];
