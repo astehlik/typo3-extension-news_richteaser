@@ -30,11 +30,16 @@ class TrimViewHelper extends AbstractViewHelper
      * Renders the children and trims whitespace around them.
      *
      * @param string $charlist If set these characters will be used for trimming.
+     * @param bool $trimBetweenHtmlTags If true whitespace between HTML tags will be removed.
      * @return string
      */
-    public function render($charlist = null)
+    public function render($charlist = null, $trimBetweenHtmlTags = true)
     {
         $content = $this->renderChildren();
+
+        if ($trimBetweenHtmlTags) {
+            $content = preg_replace('~>\s+<~', '><', $content);
+        }
 
         if ($charlist !== null) {
             return trim($content, $charlist);

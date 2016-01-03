@@ -1,15 +1,13 @@
 {namespace n=GeorgRinger\News\ViewHelpers}
 {namespace nr=Int\NewsRichteaser\ViewHelpers}
 
-<f:section name="newsContent">
-<nr:format.trim>
+<f:section name="newsContent"><nr:format.trim>
 	<f:if condition="{newsItem.contentElements}">
 		<!-- content elements -->
 		<f:cObject typoscriptObjectPath="lib.tx_news.contentElementRendering" data="{newsUid: newsItem.uidLocalized, newsPid: newsItem.pid}" />
 	</f:if>
 	<f:format.html>{newsItem.bodytext}</f:format.html>
-</nr:format.trim>
-</f:section>
+</nr:format.trim></f:section>
 
 <div class="teaser-text">
 	<span itemprop="description">
@@ -29,7 +27,7 @@
 			</f:then>
 			<f:else>
 				<f:if condition="{settings.cropBodytext}">
-					<f:then><f:format.crop maxCharacters="{settings.cropMaxCharacters}" respectWordBoundaries="1" respectHtml="1"><f:render section="newsContent" arguments="{_all}" /></f:format.crop></f:then>
+					<f:then><f:format.crop maxCharacters="{settings.cropMaxCharacters}"><f:render section="newsContent" arguments="{_all}" /></f:format.crop></f:then>
 					<f:else><f:render section="newsContent" arguments="{_all}" /></f:else>
 				</f:if>
 			</f:else>
