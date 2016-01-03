@@ -1,11 +1,14 @@
 {namespace n=GeorgRinger\News\ViewHelpers}
+{namespace nr=Int\NewsRichteaser\ViewHelpers}
 
 <f:section name="newsContent">
+<nr:format.trim>
 	<f:if condition="{newsItem.contentElements}">
 		<!-- content elements -->
 		<f:cObject typoscriptObjectPath="lib.tx_news.contentElementRendering" data="{newsUid: newsItem.uidLocalized, newsPid: newsItem.pid}" />
 	</f:if>
 	<f:format.html>{newsItem.bodytext}</f:format.html>
+</nr:format.trim>
 </f:section>
 
 <div class="teaser-text">
