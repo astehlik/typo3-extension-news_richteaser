@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -19,6 +20,13 @@ class AcceptanceTester extends \Codeception\Actor
     use _generated\AcceptanceTesterActions;
 
     /**
-     * Define custom actions here
+     * Executes an assertion that the given pattern matches the given value.
+     *
+     * @param string $pattern
+     * @param string $value
      */
+    public function seeMatches($pattern, $value)
+    {
+        \PHPUnit_Framework_Assert::assertRegExp($pattern, $value);
+    }
 }
