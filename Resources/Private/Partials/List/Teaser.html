@@ -1,13 +1,20 @@
 {namespace n=GeorgRinger\News\ViewHelpers}
 {namespace nr=Int\NewsRichteaser\ViewHelpers}
 
-<f:section name="newsContent"><nr:format.trim>
+<f:section name="newsContent">
 	<f:if condition="{newsItem.contentElements}">
 		<!-- content elements -->
 		<f:cObject typoscriptObjectPath="lib.tx_news.contentElementRendering" data="{newsUid: newsItem.uidLocalized, newsPid: newsItem.pid}" />
 	</f:if>
-	<f:format.html>{newsItem.bodytext}</f:format.html>
-</nr:format.trim></f:section>
+	<f:if condition="{settings.cropBodytext}">
+		<f:then>
+			<f:format.crop maxCharacters="{settings.cropMaxCharacters}"><nr:format.trim>
+					<f:format.html>{newsItem.bodytext}</f:format.html>
+			</nr:format.trim></f:format.crop>
+		</f:then>
+		<f:else><f:format.html>{newsItem.bodytext}</f:format.html></f:else>
+	</f:if>
+</f:section>
 
 <div class="teaser-text">
 	<span itemprop="description">
@@ -26,10 +33,7 @@
 				</f:if>
 			</f:then>
 			<f:else>
-				<f:if condition="{settings.cropBodytext}">
-					<f:then><f:format.crop maxCharacters="{settings.cropMaxCharacters}"><f:render section="newsContent" arguments="{_all}" /></f:format.crop></f:then>
-					<f:else><f:render section="newsContent" arguments="{_all}" /></f:else>
-				</f:if>
+				<f:render section="newsContent" arguments="{_all}" />
 			</f:else>
 		</f:if>
 	</span>
