@@ -1,0 +1,5 @@
+# `master` environment config goes here
+modules:
+    enabled:
+        - PhpBrowser:
+            url: http://news-richteaser-master.stot3.avior.uberspace.de

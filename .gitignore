@@ -1,2 +1,3 @@
 /.Build
 composer.lock
+Tests/Codeception/_output
