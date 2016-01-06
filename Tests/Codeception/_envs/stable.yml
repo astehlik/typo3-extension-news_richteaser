@@ -1,5 +1,5 @@
 # `stable` environment config goes here
 modules:
     enabled:
-        - PhpBrowser:
+        - WebDriver:
             url: http://news-richteaser-stable.stot3.avior.uberspace.de

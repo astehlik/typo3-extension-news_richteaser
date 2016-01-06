@@ -5,3 +5,8 @@
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
 class_name: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            url: http://news-richteaser-stable.stot3.avior.uberspace.de
+            browser: firefox
