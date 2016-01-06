@@ -16,7 +16,7 @@ $I->switchToIFrame("content");
 
 $I->waitForElement('#recordlist-tx_news_domain_model_news');
 $I->click('#recordlist-tx_news_domain_model_news .icon-actions-add');
-$I->waitForElement('#EditDocumentController');
+$I->waitForElement('.typo3-TCEforms');
 
 $I->waitForElement('[data-title="Teaser content elements"] [name$="[header]"]');
 $I->canSeeInField('[data-title="Teaser content elements"] [name$="[header]"]', 'Step 1: Enter teaser text');
