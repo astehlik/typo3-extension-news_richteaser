@@ -61,7 +61,7 @@ script:
         export DISPLAY=:99.0
         echo "Starting selenium server"
         wget http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar
-        java -jar selenium-server-standalone-2.48.2.jar > /dev/null &
+        java -jar selenium-server-standalone-2.48.2.jar > /dev/null 2>&1 &
         echo "Waiting for servers to start..."
         sleep 5
         echo "Running codeception tests";
