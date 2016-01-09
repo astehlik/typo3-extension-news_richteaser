@@ -60,6 +60,11 @@ script:
         echo "Starting framebuffer"
         sh -e /etc/init.d/xvfb start
         export DISPLAY=:99.0
+        echo "Extracting firefox and setting PATH variable..."
+        cd /tmp/
+        tar -xjf firefox-43.0.tar.bz2
+        export PATH="/tmp/firefox:$PATH"
+        echo "Using firefox version `firefox --version`"
         echo "Starting selenium server"
         wget http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar
         java -jar selenium-server-standalone-2.48.2.jar > /dev/null 2>&1 &
