@@ -27,6 +27,7 @@ addons:
   apt:
     packages:
       - parallel
+  firefox: "43.0"
 
 cache:
   directories:
