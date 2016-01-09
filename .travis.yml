@@ -61,8 +61,7 @@ script:
         sh -e /etc/init.d/xvfb start
         export DISPLAY=:99.0
         echo "Extracting firefox and setting PATH variable..."
-        cd /tmp/
-        tar -xjf firefox-43.0.tar.bz2
+        tar -xjf /tmp/firefox-43.0.tar.bz2 --directory /tmp
         export PATH="/tmp/firefox:$PATH"
         echo "Using firefox version `firefox --version`"
         echo "Starting selenium server"
