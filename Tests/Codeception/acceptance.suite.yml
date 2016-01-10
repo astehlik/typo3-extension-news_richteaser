@@ -10,3 +10,4 @@ modules:
         - WebDriver:
             url: http://news-richteaser-stable.stot3.avior.uberspace.de
             browser: firefox
+            window_size: 1920x1080
