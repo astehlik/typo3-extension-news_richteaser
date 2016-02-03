@@ -2,7 +2,6 @@
 	"name": "de-swebhosting-typo3-extension/news-richteaser",
 	"description": "Allows TYPO3 content elments in news teasers.",
 	"type": "typo3-cms-extension",
-	"version": "2.1.0",
 	"license": "GPL-3.0+",
 	"replace": {
 		"news_richteaser": "self.version"
