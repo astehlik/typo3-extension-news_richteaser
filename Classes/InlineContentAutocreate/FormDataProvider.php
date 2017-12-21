@@ -1,4 +1,5 @@
 <?php
+
 namespace Int\NewsRichteaser\InlineContentAutocreate;
 
 /*                                                                        *
@@ -34,7 +35,8 @@ class FormDataProvider implements FormDataProviderInterface
 
     /**
      * Checks if the current request is a create request for the first inline tt_content child of a news record.
-     * If such a request is detected some default values for the header and the bodytext will be set in the result array.
+     * If such a request is detected some default values for the header and the bodytext will be set in the result
+     * array.
      *
      * @param array $result Initialized result array
      * @return array Result filled with more data
@@ -73,6 +75,8 @@ class FormDataProvider implements FormDataProviderInterface
             $this->languageService = $GLOBALS['LANG'];
         }
 
-        return $this->languageService->sL('LLL:EXT:news_richteaser/Resources/Private/Language/locallang_db.xlf:' . $key);
+        return $this->languageService->sL(
+            'LLL:EXT:news_richteaser/Resources/Private/Language/locallang_db.xlf:' . $key
+        );
     }
 }

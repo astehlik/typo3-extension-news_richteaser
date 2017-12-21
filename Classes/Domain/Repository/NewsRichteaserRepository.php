@@ -1,4 +1,5 @@
 <?php
+
 namespace Int\NewsRichteaser\Domain\Repository;
 
 /*                                                                        *
@@ -16,89 +17,91 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 /**
  * Repository for richteaser news
  */
-class NewsRichteaserRepository extends Repository {
+class NewsRichteaserRepository extends Repository
+{
+    const CTYPE_NEWS_TEASER = 'tx_news_teaser';
 
-	const CTYPE_NEWS_TEASER = 'tx_news_teaser';
+    /**
+     * @var \TYPO3\CMS\Core\Database\DatabaseConnection
+     */
+    protected $db;
 
-	/**
-	 * @var \TYPO3\CMS\Core\Database\DatabaseConnection
-	 */
-	protected $db;
+    /**
+     * Constructs a new Repository
+     *
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+     */
+    function __construct(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
+    {
+        parent::__construct($objectManager);
+        $this->db = $GLOBALS['TYPO3_DB'];
+    }
 
-	/**
-	 * Constructs a new Repository
-	 *
-	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
-	 */
-	function __construct(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
-		parent::__construct($objectManager);
-		$this->db = $GLOBALS['TYPO3_DB'];
-	}
+    /**
+     * Finds all news that have a content element with type tx_news_teaser.
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findByTeaserContentElement()
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->matching($query->equals('contentElements.CType', static::CTYPE_NEWS_TEASER));
+        return $query->execute();
+    }
 
-	/**
-	 * Finds all news that have a content element with type tx_news_teaser.
-	 *
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findByTeaserContentElement() {
-		$query = $this->createQuery();
-		$query->getQuerySettings()->setRespectStoragePage(FALSE);
-		$query->matching($query->equals('contentElements.CType', static::CTYPE_NEWS_TEASER));
-		return $query->execute();
-	}
+    /**
+     * Returns all records in the tx_news_domain_model_news_ttcontent_mm table
+     *
+     * @return array
+     */
+    public function findInlineContentsMm()
+    {
+        $inlineContents = [];
+        $result = $this->db->exec_SELECTquery('*', 'tx_news_domain_model_news_ttcontent_mm', '');
 
-	/**
-	 * Returns all records in the tx_news_richteaser_domain_model_news_teaser_ttcontent_mm table
-	 *
-	 * @return array
-	 */
-	public function findInlineContentsMmTeaser() {
+        while ($inlineContentRow = $this->db->sql_fetch_assoc($result)) {
+            $inlineContents[] = $inlineContentRow;
+        }
 
-		$inlineContents = array();
-		$result = $this->db->exec_SELECTquery('*', 'tx_news_richteaser_domain_model_news_teaser_ttcontent_mm', '');
+        return $inlineContents;
+    }
 
-		while ($inlineContentRow = $this->db->sql_fetch_assoc($result)) {
-			$inlineContents[] = $inlineContentRow;
-		}
+    /**
+     * Returns all records in the tx_news_richteaser_domain_model_news_teaser_ttcontent_mm table
+     *
+     * @return array
+     */
+    public function findInlineContentsMmTeaser()
+    {
+        $inlineContents = [];
+        $result = $this->db->exec_SELECTquery('*', 'tx_news_richteaser_domain_model_news_teaser_ttcontent_mm', '');
 
-		return $inlineContents;
-	}
+        while ($inlineContentRow = $this->db->sql_fetch_assoc($result)) {
+            $inlineContents[] = $inlineContentRow;
+        }
 
-	/**
-	 * Returns all records in the tx_news_domain_model_news_ttcontent_mm table
-	 *
-	 * @return array
-	 */
-	public function findInlineContentsMm() {
+        return $inlineContents;
+    }
 
-		$inlineContents = array();
-		$result = $this->db->exec_SELECTquery('*', 'tx_news_domain_model_news_ttcontent_mm', '');
-
-		while ($inlineContentRow = $this->db->sql_fetch_assoc($result)) {
-			$inlineContents[] = $inlineContentRow;
-		}
-
-		return $inlineContents;
-	}
-
-	/**
-	 * Updates the foreign table fields in tt_content records.
-	 *
-	 * @param string $relatedField The related field (content_elements or teaser_content_elements)
-	 * @param int $newsUid UID of the news
-	 * @param int $contentUid UID of the content
-	 * @param int $sorting The sorting value
-	 */
-	public function updateInlineContentRelation($relatedField, $newsUid, $contentUid, $sorting) {
-
-		$this->db->exec_UPDATEquery(
-			'tt_content',
-			'tt_content.uid=' . intval($contentUid),
-			array(
-				'tx_news_related_news' => $newsUid,
-				'tx_news_related_field' => $relatedField,
-				'sorting' => $sorting,
-			)
-		);
-	}
+    /**
+     * Updates the foreign table fields in tt_content records.
+     *
+     * @param string $relatedField The related field (content_elements or teaser_content_elements)
+     * @param int $newsUid UID of the news
+     * @param int $contentUid UID of the content
+     * @param int $sorting The sorting value
+     */
+    public function updateInlineContentRelation($relatedField, $newsUid, $contentUid, $sorting)
+    {
+        $this->db->exec_UPDATEquery(
+            'tt_content',
+            'tt_content.uid=' . intval($contentUid),
+            [
+                'tx_news_related_news' => $newsUid,
+                'tx_news_related_field' => $relatedField,
+                'sorting' => $sorting,
+            ]
+        );
+    }
 }

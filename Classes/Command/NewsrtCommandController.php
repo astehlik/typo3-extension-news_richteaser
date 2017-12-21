@@ -1,4 +1,5 @@
 <?php
+
 namespace Int\NewsRichteaser\Command;
 
 /*                                                                        *
@@ -17,68 +18,87 @@ use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 /**
  * Controller for richteaser news related commands.
  */
-class NewsrtCommandController extends CommandController {
+class NewsrtCommandController extends CommandController
+{
+    /**
+     * @var \GeorgRinger\News\Domain\Repository\TtContentRepository
+     */
+    protected $contentRepository;
 
-	/**
-	 * @var \Int\NewsRichteaser\Domain\Repository\NewsRichteaserRepository
-	 * @inject
-	 */
-	protected $newsRepository;
+    /**
+     * @var \Int\NewsRichteaser\Domain\Repository\NewsRichteaserRepository
+     */
+    protected $newsRepository;
 
-	/**
-	 * @var \GeorgRinger\News\Domain\Repository\TtContentRepository
-	 * @inject
-	 */
-	protected $contentRepository;
+    public function injectContentRepository(\GeorgRinger\News\Domain\Repository\TtContentRepository $contentRepository)
+    {
+        $this->contentRepository = $contentRepository;
+    }
 
+    public function injectNewsRepository(\Int\NewsRichteaser\Domain\Repository\NewsRichteaserRepository $newsRepository)
+    {
+        $this->newsRepository = $newsRepository;
+    }
 
-	/**
-	 * Migrates all news that use the old tx_news_teaser content element.
-	 */
-	public function migrateTeaserContentElementsCommand() {
+    /**
+     * Migrates all news that use the old tx_news_teaser content element.
+     */
+    public function migrateTeaserContentElementsCommand()
+    {
 
-		/** @var \Int\NewsRichteaser\Domain\Model\NewsRichteaser $news */
-		$newsWithTeaserContent = $this->newsRepository->findByTeaserContentElement();
-		foreach ($newsWithTeaserContent as $news) {
+        /** @var \Int\NewsRichteaser\Domain\Model\NewsRichteaser $news */
+        $newsWithTeaserContent = $this->newsRepository->findByTeaserContentElement();
+        foreach ($newsWithTeaserContent as $news) {
 
-			/** @var \GeorgRinger\News\Domain\Model\TtContent $content */
-			$contentUpdateCount = 0;
-			$allContent = $news->getContentElements()->toArray();
-			foreach ($allContent as $content) {
-				if ($content->getCType() === NewsRichteaserRepository::CTYPE_NEWS_TEASER) {
-					$this->contentRepository->remove($content);
-					break;
-				}
-				$news->getTeaserContentElements()->attach($content);
-				$contentUpdateCount++;
-			}
+            /** @var \GeorgRinger\News\Domain\Model\TtContent $content */
+            $contentUpdateCount = 0;
+            $allContent = $news->getContentElements()->toArray();
+            foreach ($allContent as $content) {
+                if ($content->getCType() === NewsRichteaserRepository::CTYPE_NEWS_TEASER) {
+                    $this->contentRepository->remove($content);
+                    break;
+                }
+                $news->getTeaserContentElements()->attach($content);
+                $contentUpdateCount++;
+            }
 
-			$this->newsRepository->update($news);
-			$this->outputLine('Migrated %d content elements in news %s', array($contentUpdateCount, $news->getTitle()));
-		}
-	}
+            $this->newsRepository->update($news);
+            $this->outputLine('Migrated %d content elements in news %s', [$contentUpdateCount, $news->getTitle()]);
+        }
+    }
 
-	/**
-	 * Update inline content elemens
-	 *
-	 * Converts the inline content elements from a m:m to a 1:n relation
-	 */
-	public function updateInlineContentsCommand() {
+    /**
+     * Update inline content elemens
+     *
+     * Converts the inline content elements from a m:m to a 1:n relation
+     */
+    public function updateInlineContentsCommand()
+    {
 
-		$inlineTeaserContents = $this->newsRepository->findInlineContentsMmTeaser();
-		$counter = 0;
-		foreach ($inlineTeaserContents as $inlineTeaserContentMm) {
-			$this->newsRepository->updateInlineContentRelation('teaser_content_elements', $inlineTeaserContentMm['uid_local'], $inlineTeaserContentMm['uid_foreign'], $inlineTeaserContentMm['sorting']);
-			$counter++;
-		}
-		$this->outputLine('Updated %d teaser content elements.', array($counter));
+        $inlineTeaserContents = $this->newsRepository->findInlineContentsMmTeaser();
+        $counter = 0;
+        foreach ($inlineTeaserContents as $inlineTeaserContentMm) {
+            $this->newsRepository->updateInlineContentRelation(
+                'teaser_content_elements',
+                $inlineTeaserContentMm['uid_local'],
+                $inlineTeaserContentMm['uid_foreign'],
+                $inlineTeaserContentMm['sorting']
+            );
+            $counter++;
+        }
+        $this->outputLine('Updated %d teaser content elements.', [$counter]);
 
-		$counter = 0;
-		$inlineContents = $this->newsRepository->findInlineContentsMm();
-		foreach ($inlineContents as $inlineContentMm) {
-			$this->newsRepository->updateInlineContentRelation('content_elements', $inlineContentMm['uid_local'], $inlineContentMm['uid_foreign'], $inlineContentMm['sorting']);
-			$counter++;
-		}
-		$this->outputLine('Updated %d content elements.', array($counter));
-	}
+        $counter = 0;
+        $inlineContents = $this->newsRepository->findInlineContentsMm();
+        foreach ($inlineContents as $inlineContentMm) {
+            $this->newsRepository->updateInlineContentRelation(
+                'content_elements',
+                $inlineContentMm['uid_local'],
+                $inlineContentMm['uid_foreign'],
+                $inlineContentMm['sorting']
+            );
+            $counter++;
+        }
+        $this->outputLine('Updated %d content elements.', [$counter]);
+    }
 }

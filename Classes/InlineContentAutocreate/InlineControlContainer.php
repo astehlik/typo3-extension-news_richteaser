@@ -1,4 +1,5 @@
 <?php
+
 namespace Int\NewsRichteaser\InlineContentAutocreate;
 
 /*                                                                        *
@@ -72,7 +73,7 @@ class InlineControlContainer extends ParentInlineControlContainer
                         // are the first tt_content childs that are created for a new news record.
                         inline.makeAjaxCall("create", [objectId, "' . $requestId . '"], true, inline.getContext(objectId));
                     }
-                }
+                };
                 TYPO3.jQuery(document).ready(function() {
                     txNewsRichteaserAutocreate();
                 });
