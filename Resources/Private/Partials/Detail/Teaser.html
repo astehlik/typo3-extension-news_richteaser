@@ -1,14 +1,14 @@
-{namespace n=GeorgRinger\News\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	data-namespace-typo3-fluid="true">
 
 <f:if condition="{newsItem.hasTeaser}">
-	<!-- teaser -->
 	<div class="teaser-text" itemprop="description">
 		<f:if condition="{newsItem.teaser}">
 			<f:then>
-				<f:format.html>{newsItem.teaser}</f:format.html>
+				{newsItem.teaser -> f:format.html()}
 			</f:then>
 			<f:else>
-				<f:cObject typoscriptObjectPath="lib.tx_news.contentElementRenderingTeaser" data="{newsUid: newsItem.uidLocalized, newsPid: newsItem.pid}" />
+				<f:cObject typoscriptObjectPath="lib.tx_news.contentElementRenderingTeaser" data="{newsUid: newsItem.uidLocalized, newsPid: newsItem.pid}"/>
 			</f:else>
 		</f:if>
 	</div>
