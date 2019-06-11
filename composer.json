@@ -14,7 +14,7 @@
 		"typo3-ter/news-richteaser": "self.version"
 	},
 	"require": {
-		"typo3/cms-core": "^7.6 || ^8.7",
+		"typo3/cms-core": "^7.6 || ^8.7 || ^9.5",
 		"georgringer/news": "^7.2"
 	},
 	"require-dev": {
