@@ -1,10 +1,12 @@
 <?php
-if (!defined('TYPO3_MODE')) {
-    die ('Access denied.');
-}
+/** @noinspection PhpMissingStrictTypesDeclarationInspection */
+/** @noinspection PhpFullyQualifiedNameUsageInspection */
+
+defined('TYPO3_MODE') or die();
 
 if (TYPO3_MODE === 'BE') {
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = \Int\NewsRichteaser\Command\NewsrtCommandController::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] =
+        \Int\NewsRichteaser\Command\MigrateTeaserContentsCommand::class;
 }
 
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']['tx_newsrichteaser_inlinecontentautocreate'] = [
@@ -13,8 +15,10 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']['tx_newsrichtea
     'priority' => 50,
 ];
 
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\Int\NewsRichteaser\InlineContentAutocreate\FormDataProvider::class] = [
+$tcaRecordConfig = &$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'];
+$tcaRecordConfig[\Int\NewsRichteaser\InlineContentAutocreate\FormDataProvider::class] = [
     'depends' => [
-        \TYPO3\CMS\Backend\Form\FormDataProvider\TcaInline::class
+        \TYPO3\CMS\Backend\Form\FormDataProvider\TcaInline::class,
     ],
 ];
+unset($tcaRecordConfig);

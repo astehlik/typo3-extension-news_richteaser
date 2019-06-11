@@ -1,6 +1,11 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-	die ('Access denied.');
-}
+/** @noinspection PhpMissingStrictTypesDeclarationInspection */
+/** @noinspection PhpFullyQualifiedNameUsageInspection */
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'News rich teaser');
+defined('TYPO3_MODE') or die();
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+    $_EXTKEY,
+    'Configuration/TypoScript',
+    'News rich teaser'
+);

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Int\NewsRichteaser\Domain\Repository;
 
@@ -12,6 +13,12 @@ namespace Int\NewsRichteaser\Domain\Repository;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use Doctrine\DBAL\FetchMode;
+use PDO;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -22,25 +29,9 @@ class NewsRichteaserRepository extends Repository
     const CTYPE_NEWS_TEASER = 'tx_news_teaser';
 
     /**
-     * @var \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    protected $db;
-
-    /**
-     * Constructs a new Repository
-     *
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
-     */
-    function __construct(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
-    {
-        parent::__construct($objectManager);
-        $this->db = $GLOBALS['TYPO3_DB'];
-    }
-
-    /**
      * Finds all news that have a content element with type tx_news_teaser.
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findByTeaserContentElement()
     {
@@ -57,14 +48,8 @@ class NewsRichteaserRepository extends Repository
      */
     public function findInlineContentsMm()
     {
-        $inlineContents = [];
-        $result = $this->db->exec_SELECTquery('*', 'tx_news_domain_model_news_ttcontent_mm', '');
-
-        while ($inlineContentRow = $this->db->sql_fetch_assoc($result)) {
-            $inlineContents[] = $inlineContentRow;
-        }
-
-        return $inlineContents;
+        $table = 'tx_news_domain_model_news_ttcontent_mm';
+        return $this->fetchAllAssociativeFromTable($table);
     }
 
     /**
@@ -74,14 +59,8 @@ class NewsRichteaserRepository extends Repository
      */
     public function findInlineContentsMmTeaser()
     {
-        $inlineContents = [];
-        $result = $this->db->exec_SELECTquery('*', 'tx_news_richteaser_domain_model_news_teaser_ttcontent_mm', '');
-
-        while ($inlineContentRow = $this->db->sql_fetch_assoc($result)) {
-            $inlineContents[] = $inlineContentRow;
-        }
-
-        return $inlineContents;
+        $table = 'tx_news_richteaser_domain_model_news_teaser_ttcontent_mm';
+        return $this->fetchAllAssociativeFromTable($table);
     }
 
     /**
@@ -94,14 +73,39 @@ class NewsRichteaserRepository extends Repository
      */
     public function updateInlineContentRelation($relatedField, $newsUid, $contentUid, $sorting)
     {
-        $this->db->exec_UPDATEquery(
-            'tt_content',
-            'tt_content.uid=' . intval($contentUid),
-            [
-                'tx_news_related_news' => $newsUid,
-                'tx_news_related_field' => $relatedField,
-                'sorting' => $sorting,
-            ]
+        $builder = $this->getQueryBuilderForTable('tt_content');
+        $builder->update('tt_content');
+        $builder->where(
+            $builder->expr()->eq(
+                'uid',
+                $builder->createNamedParameter((int)$contentUid, PDO::PARAM_INT)
+            )
         );
+        $builder->set('tx_news_related_news', $newsUid);
+        $builder->set('tx_news_related_field', $relatedField);
+        $builder->set('sorting', $sorting);
+        $builder->execute();
+    }
+
+    /**
+     * @param string $table
+     * @return array
+     */
+    private function fetchAllAssociativeFromTable(string $table): array
+    {
+        $queryBuilder = $this->getQueryBuilderForTable($table);
+        $queryBuilder->from($table);
+        $result = $queryBuilder->execute();
+        return $result->fetchAll(FetchMode::ASSOCIATIVE);
+    }
+
+    private function getConnectionPool(): ConnectionPool
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class);
+    }
+
+    private function getQueryBuilderForTable(string $table): QueryBuilder
+    {
+        return $this->getConnectionPool()->getQueryBuilderForTable($table);
     }
 }

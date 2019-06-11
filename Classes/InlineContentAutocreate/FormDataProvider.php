@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Int\NewsRichteaser\InlineContentAutocreate;
 
@@ -11,7 +12,9 @@ namespace Int\NewsRichteaser\InlineContentAutocreate;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
+
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
+use TYPO3\CMS\Core\Localization\LanguageService;
 
 /**
  * Initializes default values in child tt_content records of news.
@@ -29,7 +32,7 @@ class FormDataProvider implements FormDataProviderInterface
     const REQUEST_ID = 'isNewsRichteaserCreateRecordRequest';
 
     /**
-     * @var \TYPO3\CMS\Lang\LanguageService
+     * @var LanguageService
      */
     protected $languageService;
 
@@ -69,9 +72,7 @@ class FormDataProvider implements FormDataProviderInterface
      */
     protected function translate($key)
     {
-
         if (!isset($this->languageService)) {
-            /** @var \TYPO3\CMS\Lang\LanguageService $GLOBALS ['LANG'] */
             $this->languageService = $GLOBALS['LANG'];
         }
 

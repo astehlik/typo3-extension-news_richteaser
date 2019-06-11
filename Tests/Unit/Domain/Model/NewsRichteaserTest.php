@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Int\NewsRichteaser\Tests\Unit\Domain\Model;
 
 /*                                                                        *
