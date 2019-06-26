@@ -68,7 +68,6 @@ class MigrateInlineContentsCommand extends Command
 
     protected function configure()
     {
-        $this->setName('Update inline content elemens');
         $this->setDescription('Converts the inline news content elements from a m:m to a 1:n relation');
     }
 
