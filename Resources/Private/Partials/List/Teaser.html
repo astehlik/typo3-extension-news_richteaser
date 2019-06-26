@@ -1,51 +1,51 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
-	data-namespace-typo3-fluid="true">
+<html data-namespace-typo3-fluid="true"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers">
 
 <f:section name="bodytextAndContents">
 <f:if condition="{newsItem.contentElements}">
-	<f:cObject typoscriptObjectPath="lib.tx_news.contentElementRendering" data="{newsUid: newsItem.uidLocalized, newsPid: newsItem.pid}"/>
+    <f:cObject data="{newsUid: newsItem.uidLocalized, newsPid: newsItem.pid}" typoscriptObjectPath="lib.tx_news.contentElementRendering"/>
 </f:if>
 <f:format.html>{newsItem.bodytext}</f:format.html>
 </f:section>
 
 <f:section name="croppedBodytextAndContents">
 <f:if condition="{settings.cropBodytext}">
-	<f:then>{f:render(section: 'bodytextAndContents', arguments: '{_all}') -> f:spaceless() -> -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries: true, respectHtml: true)}</f:then>
-	<f:else>{f:render(section: 'bodytextAndContents', arguments: '{_all}')}</f:else>
+    <f:then>{f:render(section: 'bodytextAndContents', arguments: '{_all}') -> f:spaceless() -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries: true, respectHtml: true)}</f:then>
+    <f:else>{f:render(section: 'bodytextAndContents', arguments: '{_all}')}</f:else>
 </f:if>
 </f:section>
 
 <f:section name="teaserContents">
-<n:removeMediaTags>
-	<f:if condition="{newsItem.teaser}">
-		<f:then>
-			{newsItem.teaser}
-		</f:then>
-		<f:else>
-			<f:cObject typoscriptObjectPath="lib.tx_news.contentElementRenderingTeaser" data="{newsUid: newsItem.uidLocalized, newsPid: newsItem.pid}"/>
-		</f:else>
-	</f:if>
-</n:removeMediaTags>
+<f:if condition="{newsItem.teaser}">
+    <f:then>
+        <f:format.html>{newsItem.teaser}</f:format.html>
+    </f:then>
+    <f:else>
+        <f:cObject data="{newsUid: newsItem.uidLocalized, newsPid: newsItem.pid}" typoscriptObjectPath="lib.tx_news.contentElementRenderingTeaser"/>
+    </f:else>
+</f:if>
 </f:section>
 
 <f:section name="croppedTeaserContents">
 <f:if condition="{settings.cropTeaser}">
-	<f:then>{f:render(section: 'teaserContents', arguments: '{_all}') -> f:spaceless() -> -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries: true, respectHtml: true)}</f:then>
-	<f:else>{f:render(section: 'teaserContents', arguments: '{_all}')}</f:else>
+    <f:then>{f:render(section: 'teaserContents', arguments: '{_all}') -> f:spaceless() -> f:format.crop(maxCharacters: '{settings.cropMaxCharacters}', respectWordBoundaries: true, respectHtml: true)}</f:then>
+    <f:else>{f:render(section: 'teaserContents', arguments: '{_all}')}</f:else>
 </f:if>
 </f:section>
 
 <div class="teaser-text">
-	<div itemprop="description">
-		<f:if condition="{newsItem.hasTeaser}">
-			<f:then><f:render section="croppedTeaserContents" arguments="{_all}"/></f:then>
-			<f:else><f:render section="croppedBodytextAndContents" arguments="{_all}"/></f:else>
-		</f:if>
-	</div>
-	<n:link newsItem="{newsItem}" settings="{settings}" class="more" title="{newsItem.title}">
-		<f:translate key="more-link"/>
-	</n:link>
+    <div itemprop="description">
+        <n:removeMediaTags>
+            <f:if condition="{newsItem.hasTeaser}">
+                <f:then><f:render section="croppedTeaserContents" arguments="{_all}"/></f:then>
+                <f:else><f:render section="croppedBodytextAndContents" arguments="{_all}"/></f:else>
+            </f:if>
+        </n:removeMediaTags>
+    </div>
+    <n:link class="more" newsItem="{newsItem}" settings="{settings}" title="{newsItem.title}">
+        <f:translate key="more-link"/>
+    </n:link>
 </div>
 
 </html>
