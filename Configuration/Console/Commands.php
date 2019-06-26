@@ -6,11 +6,7 @@ use Int\NewsRichteaser\Command\MigrateTeaserContentsCommand;
 
 return [
     'commands' => [
-        'newsrt:migrateinline' => [
-            'class' => MigrateInlineContentsCommand::class,
-        ],
-        'newsrt:migrateteaser' => [
-            'class' => MigrateTeaserContentsCommand::class,
-        ],
+        'newsrt:migrateinline' => ['class' => MigrateInlineContentsCommand::class],
+        'newsrt:migrateteaser' => ['class' => MigrateTeaserContentsCommand::class],
     ],
 ];
