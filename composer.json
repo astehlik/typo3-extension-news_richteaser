@@ -2,7 +2,7 @@
 	"name": "de-swebhosting-typo3-extension/news-richteaser",
 	"description": "Allows TYPO3 content elments in news teasers.",
 	"type": "typo3-cms-extension",
-	"license": "GPL-3.0+",
+	"license": "GPL-3.0-or-later",
 	"authors": [
 		{
 			"name": "Alexander Stehlik",
@@ -10,7 +10,6 @@
 		}
 	],
 	"replace": {
-		"news_richteaser": "self.version",
 		"typo3-ter/news-richteaser": "self.version"
 	},
 	"require": {
